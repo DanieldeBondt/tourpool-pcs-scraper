@@ -11,3 +11,8 @@ Credits to E.J. Poels for creating and hosting the original Excel-based Tour de 
 
 ## Last update: TdF 2025
 Please note that the html page of PCS could change in the future, and this scraper may not be accurate anymore. 
+
+## Future development
+* Refactor scraping to use [procyclingstats](https://github.com/themm1/procyclingstats) package.
+* Add player's rider sheets and automate player rankings.
+* Publish and automatically update results and rankings in a hosted dashboard.
