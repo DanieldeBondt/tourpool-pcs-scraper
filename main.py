@@ -2,7 +2,7 @@ import pathlib
 
 from PCS_scraper import update_points_stages, get_startlist_teams
 
-TDF_YEAR = 2025
+TDF_YEAR = 2024
 CURRENT_STAGE = 21
 
 # Extract the full startlist, useful for creating participation forms for the TdF game

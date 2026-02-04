@@ -1,3 +1,4 @@
+import cloudscraper
 import numpy as np
 import pandas as pd
 import re
@@ -56,6 +57,7 @@ POINTS_DISTRIBUTION = {
     }
 }
 
+scraper = cloudscraper.create_scraper()
 
 def get_rider_string(rider_soup):
     """Unpack a rider's name from the html formatting."""
@@ -85,7 +87,7 @@ def get_startlist_teams(year=2025):
             riders (pandas DataFrame):  Dataframe of all participating riders organized with teams as column headers.
     """
     start_url = get_pcs_url(type='startlist', year=year)
-    start_soup = bs(urlib.urlopen(urlib.Request(start_url, headers=get_random_agent())).read(), 'html.parser')
+    start_soup = bs(scraper.get(start_url).text, 'html.parser')
     list_soup = start_soup.find("div", class_="page-content")
     riders_soup = list_soup.find_all("a", string=True, href=re.compile("^(rider|team)/", ))
     teams = {}
@@ -115,7 +117,7 @@ def get_startlist(year=2025):
     """
     riders = []
     start_url = get_pcs_url(type='startlist', year=year)
-    start_soup = bs(urlib.urlopen(urlib.Request(start_url, headers=get_random_agent())).read(), 'html.parser')
+    start_soup = bs(scraper.get(start_url).text, 'html.parser')
     riders_soup = start_soup.find_all("a", href=re.compile("^rider/"))
     for rider in riders_soup:
         riders.append(rider.string)
@@ -137,7 +139,7 @@ def get_stage_results(stage, year=2025):
             handled by get_final_results()
     """
     stage_url = get_pcs_url(type='stage', stage=stage, year=year)
-    soup = bs(urlib.urlopen(urlib.Request(stage_url, headers=get_random_agent())).read(), 'html.parser')
+    soup = bs(scraper.get(stage_url).text, 'html.parser')
     tables_raw = soup.find_all("table", class_=re.compile("result"))
     stage_table = tables_raw[0]
     stage_list = stage_table.find_all("a", href=re.compile("^rider"))
@@ -170,7 +172,7 @@ def get_final_results(stage=21, year=2025):
     """
     stage_url = get_pcs_url(type='stage', stage=stage, year=year)
     # time.sleep(2)
-    soup = bs(urlib.urlopen(urlib.Request(stage_url, headers=get_random_agent())).read(), 'html.parser')
+    soup = bs(scraper.get(stage_url).text, 'html.parser')
     tables_raw = soup.find_all("table", class_=re.compile("result"))
 
     def distribute_points(table, point_distribution):
@@ -226,6 +228,5 @@ def update_points_stages(stage, year=2025, include_final_points=False):
     points_overview = results.sort_values(by='total', ascending=False)
 
     return points_overview
-
 
 

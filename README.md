@@ -9,7 +9,7 @@ For questions or suggestions please contact Daniël de Bondt, [danieldbondt@gmai
 Credits to E.J. Poels for creating and hosting the original Excel-based Tour de France pool that this project is built to facilitate.
 
 
-## Last update: TdF 2025
+## Last update: TdF 2025 / 29-01-2026
 Please note that the html page of PCS could change in the future, and this scraper may not be accurate anymore. 
 
 ## Future development
